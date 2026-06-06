@@ -7,7 +7,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initScrollAnimations();
-  initBookingForm();
 });
 
 /* ==========================================================================
@@ -94,94 +93,4 @@ function initScrollAnimations() {
   }
 }
 
-/* ==========================================================================
-   3. Booking Form Validation & Success Portal
-   ========================================================================== */
-function initBookingForm() {
-  const bookingForm = document.getElementById('bookingForm');
-  const modalOverlay = document.getElementById('successModal');
-  const btnCloseModal = document.getElementById('btnCloseModal');
-  const submitBtn = document.getElementById('bookSubmitBtn');
 
-  if (!bookingForm || !modalOverlay) return;
-
-  bookingForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Simple visual validation check
-    const inputs = bookingForm.querySelectorAll('.form-control');
-    let isValid = true;
-
-    inputs.forEach(input => {
-      if (input.hasAttribute('required') && !input.value.trim()) {
-        isValid = false;
-        input.style.borderColor = '#C25945'; // Highlight red
-      } else {
-        input.style.borderColor = 'rgba(28, 63, 36, 0.08)'; // Restore border
-      }
-    });
-
-    if (!isValid) return;
-
-    // Gather form values
-    const name = document.getElementById('bookName').value.trim();
-    const email = document.getElementById('bookEmail').value.trim();
-    const phone = document.getElementById('bookPhone').value.trim();
-    const preferredPackage = document.getElementById('bookPackage').value;
-    const details = document.getElementById('bookDetails').value.trim();
-
-    // Show loading state on button
-    const originalBtnText = submitBtn.textContent;
-    submitBtn.textContent = 'Submitting Request...';
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = '0.7';
-
-    try {
-      // Send data to Express backend endpoint
-      const response = await fetch('/api/bookings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          package: preferredPackage,
-          details
-        })
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        // Show success modal overlay
-        modalOverlay.classList.add('active');
-        bookingForm.reset();
-      } else {
-        alert(result.error || 'Failed to submit enquiry. Please try again.');
-      }
-    } catch (err) {
-      console.error('Error submitting form:', err);
-      alert('A network error occurred. Please verify your server is running and try again.');
-    } finally {
-      // Restore button state
-      submitBtn.textContent = originalBtnText;
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = '1';
-    }
-  });
-
-  // Modal Closing Triggers
-  if (btnCloseModal) {
-    btnCloseModal.addEventListener('click', () => {
-      modalOverlay.classList.remove('active');
-    });
-  }
-
-  modalOverlay.addEventListener('click', (e) => {
-    if (e.target === modalOverlay) {
-      modalOverlay.classList.remove('active');
-    }
-  });
-}
