@@ -1426,27 +1426,29 @@ textarea.form-control {
 /* --- Booking Pathways Styles --- */
 .booking-pathways {
   margin-top: 2.5rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 }
 
 .pathway-card {
   background: var(--bg-secondary);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
   border: var(--border-subtle);
   display: flex;
-  gap: 1.2rem;
+  flex-direction: column;
+  gap: 1rem;
   align-items: center;
+  text-align: center;
 }
 
 .pathway-card.phone-pathway {
-  border-left: 4px solid var(--accent-gold);
+  border-top: 4px solid var(--accent-gold);
 }
 
 .pathway-card.email-pathway {
-  border-left: 4px solid var(--primary-green);
+  border-top: 4px solid var(--primary-green);
 }
 
 .pathway-icon {
@@ -1468,7 +1470,7 @@ textarea.form-control {
 
 .pathway-details {
   min-width: 0;
-  flex-grow: 1;
+  width: 100%;
 }
 
 .pathway-title {
@@ -1477,7 +1479,7 @@ textarea.form-control {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.4rem;
 }
 
 .phone-pathway .pathway-title {
@@ -1490,7 +1492,7 @@ textarea.form-control {
 
 .pathway-value {
   font-family: var(--font-sans);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: var(--primary-green);
   font-weight: 700;
   margin: 0;
@@ -1509,7 +1511,7 @@ textarea.form-control {
 }
 
 .email-pathway .pathway-value {
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0;
 }
@@ -1517,7 +1519,7 @@ textarea.form-control {
 .pathway-subtext {
   font-size: 0.8rem;
   color: var(--text-light);
-  margin: 3px 0 0 0;
+  margin: 4px 0 0 0;
 }
 
 .pathway-subtext a {
@@ -1669,16 +1671,20 @@ textarea.form-control {
     grid-template-columns: 1fr;
     gap: 0;
   }
-  
+
   .footer-top {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  
+
   .footer-bottom {
     flex-direction: column;
     gap: 1.5rem;
     text-align: center;
+  }
+
+  .booking-pathways {
+    grid-template-columns: 1fr;
   }
 }
 
