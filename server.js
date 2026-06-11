@@ -15,20 +15,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB Atlas
+// Connect to MongoDB Atlas (if MONGODB_URI is provided and not using placeholder)
 const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI || MONGODB_URI.includes('<username>')) {
-  console.warn('WARNING: MongoDB Connection URI is using placeholder values. Please check your .env file.');
+if (MONGODB_URI && !MONGODB_URI.includes('<username>')) {
+  mongoose.connect(MONGODB_URI)
+    .then(() => {
+      console.log('Successfully connected to MongoDB Atlas database');
+    })
+    .catch((err) => {
+      console.error('Failed to connect to MongoDB Atlas:', err.message);
+    });
+} else {
+  console.log('MongoDB connection skipped: MONGODB_URI is not set or holds placeholder values.');
 }
-
-mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('Successfully connected to MongoDB Atlas database');
-  })
-  .catch((err) => {
-    console.error('Failed to connect to MongoDB Atlas:', err.message);
-  });
 
 // Setup Mongoose Schema and Model for Bookings
 const bookingSchema = new mongoose.Schema({
@@ -128,7 +127,12 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Start listening
-app.listen(PORT, () => {
-  console.log(`Vasudeva Ayurveda server is running on port ${PORT}`);
-});
+// Start listening (only if not running in a serverless/Vercel environment)
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Vasudeva Ayurveda server is running on port ${PORT}`);
+  });
+}
+
+// Export the App for Vercel serverless functions
+module.exports = app;
