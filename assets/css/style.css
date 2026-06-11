@@ -268,12 +268,10 @@ img {
 .logo-placeholder {
   width: 48px;
   height: 48px;
-  background: #000000;
-  border-radius: 50%;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--accent-gold);
   overflow: hidden;
   transition: var(--transition-smooth);
 }
@@ -281,7 +279,7 @@ img {
 .logo-placeholder img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .logo-text {
@@ -1204,20 +1202,17 @@ textarea.form-control {
 .footer-logo-placeholder {
   width: 44px;
   height: 44px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--accent-gold);
   overflow: hidden;
 }
 
 .footer-logo-placeholder img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: brightness(0) invert(1);
+  object-fit: contain;
 }
 
 .footer-logo-title {
