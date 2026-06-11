@@ -1495,7 +1495,7 @@ textarea.form-control {
   font-size: 1.2rem;
   color: var(--primary-green);
   font-weight: 700;
-  margin: 0;
+  margin: 0.5rem 0 0 0;
   line-height: 1.2;
   letter-spacing: 0.5px;
   word-break: break-word;
@@ -1519,7 +1519,8 @@ textarea.form-control {
 .pathway-subtext {
   font-size: 0.8rem;
   color: var(--text-light);
-  margin: 4px 0 0 0;
+  margin: 8px 0 0 0;
+  white-space: nowrap;
 }
 
 .pathway-subtext a {
